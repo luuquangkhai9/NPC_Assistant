@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  npc-system:
+    build: .
+    container_name: npc-report-system
+    ports:
+      - "7860:7860"  # Gradio UI
+      - "8000:8000"  # FastAPI
+    volumes:
+      - ../outputs:/app/outputs  # Mount outputs directory
+      - ./models:/app/models     # Mount models directory
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - CUDA_VISIBLE_DEVICES=0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    
+  # Optional: Separate API service
+  npc-api:
+    build: .
+    container_name: npc-api
+    command: ["python", "run.py", "api", "--api-port", "8000"]
+    ports:
+      - "8001:8000"
+    volumes:
+      - ../outputs:/app/outputs
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    profiles:
+      - api-only
+    restart: unless-stopped
+
+  # Optional: Separate Gradio service
+  npc-gradio:
+    build: .
+    container_name: npc-gradio
+    command: ["python", "run.py", "gradio", "--gradio-port", "7860"]
+    ports:
+      - "7861:7860"
+    volumes:
+      - ../outputs:/app/outputs
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    profiles:
+      - gradio-only
+    restart: unless-stopped
+
+networks:
+  default:
+    name: npc-network

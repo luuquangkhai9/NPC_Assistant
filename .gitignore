@@ -1,0 +1,7 @@
+h5_dataset/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+.vscode/
+.idea/

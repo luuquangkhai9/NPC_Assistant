@@ -1,0 +1,58 @@
+{
+  "patient_id": "OA_CenterA_ano_set_A_003",
+  "h5_path": "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/h5_dataset/val_set/OA_CenterA_ano_set_A_003.h5",
+  "timestamp": "2025-11-30T16:13:02.457026",
+  "image_shape": [
+    48,
+    512,
+    512
+  ],
+  "spacing": [
+    0.5077999830245972,
+    0.5077999830245972,
+    2.4999897480010986
+  ],
+  "features": {
+    "volume_mm3": 26838.0390625,
+    "volume_cm3": 26.83799934387207,
+    "voxel_count": 41632,
+    "max_diameter_mm": 287.54,
+    "axial_diameter_mm": 287.7,
+    "sagittal_diameter_mm": 49.92,
+    "coronal_diameter_mm": 287.54,
+    "bbox_size_mm": [
+      11.68,
+      49.76,
+      290.0
+    ],
+    "centroid_mm": [
+      11.76,
+      117.43,
+      641.06
+    ],
+    "slice_range": [
+      9,
+      31
+    ],
+    "num_slices_involved": 23,
+    "surface_area_mm2": 3165975.93,
+    "sphericity": 0.0010000000474974513,
+    "compactness": 0.0,
+    "elongation": 24.83,
+    "mean_intensity": 2.306,
+    "std_intensity": 0.915,
+    "num_components": 1,
+    "is_multifocal": false,
+    "spacing": [
+      0.5077999830245972,
+      0.5077999830245972,
+      2.4999897480010986
+    ]
+  },
+  "figure_paths": [
+    "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_003/segmentation_slices.png",
+    "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_003/three_plane_view.png"
+  ],
+  "report_text": "Tuyệt vời! Dưới đây là bản báo cáo y khoa chuyên nghiệp dựa trên dữ liệu và hình ảnh bạn cung cấp, cùng với các phần phân tích và đề xuất theo yêu cầu.\n\n## BÁO CÁO Y KHOA\n**Mã bệnh nhân:** OA_CenterA_ano_set_A_003\n**Ngày thực hiện:** 30/11/2025\n**Phương pháp:** MRI vùng đầu cổ\n\n**1. MÔ TẢ HÌNH ẢNH HỌC:**\n\nHình ảnh MRI vùng đầu cổ cho thấy một khối u lớn nằm ở vòm họng. Khối u trải dài từ slice 9 đến slice 31, chiếm tổng cộng 23 lát cắt. Thể tích khối u ước tính khoảng 26.84 cm³ (26838.0 mm³). Kích thước đường kính lớn nhất của khối u trên mặt phẳng axial là 287.7 mm, trên mặt phẳng sagittal là 49.9 mm, và trên mặt phẳng coronal là 287.5 mm.\n\n**2. ĐÁNH GIÁ MỨC ĐỘ LAN RỘNG:**\n\nDo kích thước khối u lớn và trải dài trên nhiều lát cắt, có khả năng khối u đã xâm lấn các cấu trúc xung quanh vòm họng. Dựa trên hình ảnh và vị trí khối u (trọng tâm tại 11.8, 117.4, 641.1 mm), cần đánh giá kỹ lưỡng sự xâm lấn vào các cấu trúc sau:\n\n*   Hốc mũi và xoang cạnh mũi\n*   Nền sọ\n*   Các dây thần kinh sọ (đặc biệt là các dây vận nhãn và dây tam thoa)\n*   Hạch bạch huyết vùng cổ\n\n**3. NHẬN XÉT VỀ ĐẶC ĐIỂM HÌNH THÁI:**\n\nKhối u có hình dạng bất thường, không đều rõ rệt, được thể hiện qua các chỉ số:\n\n*   Độ cầu (Sphericity): 0.001 (gần 0 cho thấy hình dạng không gần với hình cầu)\n*   Độ nén (Compactness): 0.000 (giá trị thấp cho thấy hình dạng không đều đặn)\n*   Độ kéo dài (Elongation): 24.83 (giá trị cao cho thấy khối u có xu hướng kéo dài theo một hướng)\n\nHình dạng bất thường này có thể gợi ý sự xâm lấn lan tỏa vào các cấu trúc xung quanh.\n\n**4. KẾT LUẬN:**\n\nHình ảnh MRI cho thấy một khối u lớn, có thể nghi ngờ là ung thư vòm họng (NPC), nằm ở vòm họng với kích thước lớn và hình dạng bất thường, có dấu hiệu xâm lấn lan rộng.\n\n**5. ĐỀ XUẤT:**\n\n*   **Sinh thiết:** Thực hiện sinh thiết khối u để xác định chẩn đoán mô bệnh học và loại ung thư.\n*   **Đánh giá giai đoạn:** Tiến hành thêm các xét nghiệm để đánh giá giai đoạn bệnh, bao gồm:\n    *   Nội soi vòm họng và sinh thiết các vùng nghi ngờ\n    *   CT scan hoặc MRI vùng cổ để đánh giá hạch bạch huyết\n    *   PET/CT để đánh giá di căn xa\n*   **Tham khảo ý kiến hội đồng chuyên môn:** Thảo luận trường hợp bệnh nhân trong hội đồng chuyên môn bao gồm bác sĩ ung bướu, bác sĩ xạ trị, bác sĩ phẫu thuật đầu cổ để đưa ra kế hoạch điều trị phù hợp.\n\n---\n\nBây giờ, tôi sẵn sàng trả lời bất kỳ câu hỏi nào của bạn về kết quả này. Hãy đặt câu hỏi để tôi có thể cung cấp thông tin chi tiết hơn.\n",
+  "pdf_path": "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_003/report_OA_CenterA_ano_set_A_003.pdf"
+}

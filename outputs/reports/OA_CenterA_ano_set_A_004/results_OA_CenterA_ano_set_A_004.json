@@ -1,0 +1,58 @@
+{
+  "patient_id": "OA_CenterA_ano_set_A_004",
+  "h5_path": "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/h5_dataset/val_set/OA_CenterA_ano_set_A_004.h5",
+  "timestamp": "2025-11-30T16:13:11.939871",
+  "image_shape": [
+    50,
+    512,
+    512
+  ],
+  "spacing": [
+    0.5077999830245972,
+    0.5077999830245972,
+    2.499999523162842
+  ],
+  "features": {
+    "volume_mm3": 33248.5703125,
+    "volume_cm3": 33.249000549316406,
+    "voxel_count": 51576,
+    "max_diameter_mm": 367.55,
+    "axial_diameter_mm": 377.54,
+    "sagittal_diameter_mm": 54.49,
+    "coronal_diameter_mm": 377.52,
+    "bbox_size_mm": [
+      13.71,
+      54.84,
+      380.0
+    ],
+    "centroid_mm": [
+      10.07,
+      110.07,
+      648.97
+    ],
+    "slice_range": [
+      3,
+      29
+    ],
+    "num_slices_involved": 27,
+    "surface_area_mm2": 3915205.58,
+    "sphericity": 0.0010000000474974513,
+    "compactness": 0.0,
+    "elongation": 27.716,
+    "mean_intensity": 2.053,
+    "std_intensity": 0.795,
+    "num_components": 7,
+    "is_multifocal": true,
+    "spacing": [
+      0.5077999830245972,
+      0.5077999830245972,
+      2.499999523162842
+    ]
+  },
+  "figure_paths": [
+    "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_004/segmentation_slices.png",
+    "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_004/three_plane_view.png"
+  ],
+  "report_text": "Tuyệt vời! Dưới đây là bản báo cáo y khoa chuyên nghiệp dựa trên kết quả phân đoạn khối u từ AI và hình ảnh MRI cung cấp, cùng với các phân tích và đề xuất:\n\n## BÁO CÁO Y KHOA\n\n**Mã bệnh nhân:** OA_CenterA_ano_set_A_004\n**Ngày thực hiện:** 30/11/2025\n**Phương pháp:** MRI vùng đầu cổ\n\n**1. MÔ TẢ HÌNH ẢNH HỌC:**\n\nHình ảnh MRI vùng đầu cổ cho thấy sự hiện diện của một khối u lớn tại vòm họng. Khối u trải rộng từ slice 3 đến slice 29, chiếm tổng cộng 27 lát cắt.\n\n*   **Vị trí:** Khối u nằm ở vị trí vòm họng, với trọng tâm ước tính tại tọa độ (10.1, 110.1, 649.0) mm. Dựa trên hình ảnh cung cấp, khối u dường như xâm lấn vào các cấu trúc xung quanh.\n*   **Kích thước:** Thể tích khối u ước tính là 33.25 cm³, tương đương 33248.6 mm³. Đường kính lớn nhất của khối u được ghi nhận trên mặt phẳng axial (377.5 mm) và coronal (377.5 mm). Đường kính nhỏ nhất trên mặt phẳng sagittal là 54.5 mm. Kích thước bounding box là 13.7 x 54.8 x 380.0 mm.\n*   **Hình dạng:** Khối u có hình dạng bất thường và không đều.\n\n**2. ĐÁNH GIÁ MỨC ĐỘ LAN RỘNG:**\n\nDựa trên thể tích lớn và sự phân bố trên nhiều lát cắt, khối u cho thấy mức độ lan rộng đáng kể. Hình ảnh cho thấy khối u có thể xâm lấn vào các cấu trúc lân cận.\n\n**3. NHẬN XÉT VỀ ĐẶC ĐIỂM HÌNH THÁI:**\n\n*   **Độ cầu (Sphericity):** Chỉ số độ cầu rất thấp (0.001), cho thấy khối u có hình dạng phức tạp, không phải hình cầu.\n*   **Độ nén (Compactness):** Chỉ số độ nén cũng rất thấp (0.000), càng khẳng định hình dạng không đều.\n*   **Độ kéo dài (Elongation):** Chỉ số độ kéo dài cao (27.72), cho thấy khối u có xu hướng phát triển theo một hướng nhất định, có thể là dọc theo các cấu trúc giải phẫu.\n*   **Đa ổ:** Kết quả AI cho thấy có 7 thành phần riêng biệt, điều này cho thấy khối u có tính chất đa ổ (multifocal), có thể là do sự lan rộng và xâm lấn.\n*   **Đặc điểm tín hiệu:** Cường độ tín hiệu trung bình là 2.053 với độ lệch chuẩn là 0.795. Thông tin này có thể hữu ích trong việc phân tích bản chất của khối u và so sánh với các khảo sát khác.\n\n**4. KẾT LUẬN:**\n\nHình ảnh MRI cho thấy một khối u kích thước lớn, hình dạng bất thường, đa ổ, nằm ở vòm họng, có dấu hiệu lan rộng và xâm lấn các cấu trúc lân cận.\n\n**5. ĐỀ XUẤT:**\n\n*   **Thăm khám lâm sàng toàn diện:** Nên thực hiện thăm khám lâm sàng kỹ lưỡng để đánh giá đầy đủ các triệu chứng và dấu hiệu liên quan.\n*   **Sinh thiết:** Sinh thiết khối u là cần thiết để xác định chẩn đoán mô bệnh học (loại tế bào ung thư) và các đặc điểm phân tử của khối u, điều này rất quan trọng cho việc lập kế hoạch điều trị.\n*   **Chẩn đoán hình ảnh bổ sung:** Có thể cần các xét nghiệm chẩn đoán hình ảnh bổ sung như CT scan hoặc PET/CT để đánh giá mức độ lan rộng của khối u đến các hạch bạch huyết vùng cổ và các cơ quan khác.\n*   **Hội chẩn đa chuyên khoa:** Nên hội chẩn với các chuyên gia ung bướu, xạ trị, phẫu thuật để đưa ra kế hoạch điều trị toàn diện và phù hợp nhất cho bệnh nhân.\n\n**LƯU Ý QUAN TRỌNG:** Báo cáo này chỉ dựa trên kết quả phân đoạn khối u từ AI và hình ảnh MRI cung cấp. Đây là một công cụ hỗ trợ chẩn đoán và không thay thế cho việc đánh giá lâm sàng và chuyên môn của bác sĩ. Quyết định chẩn đoán và điều trị cuối cùng phải dựa trên sự kết hợp của tất cả các thông tin lâm sàng và cận lâm sàng.\n\n---\n\nTôi sẵn sàng trả lời các câu hỏi của bạn về kết quả này. Vui lòng cho tôi biết nếu bạn có bất kỳ thắc mắc nào.\n",
+  "pdf_path": "/home/ubuntu/Documents/Source_NPC/SFADA-GTV-Seg/New_Code/notebooks/outputs/reports/OA_CenterA_ano_set_A_004/report_OA_CenterA_ano_set_A_004.pdf"
+}
