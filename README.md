@@ -7,7 +7,7 @@ Hệ thống phân tích và tạo báo cáo khối u vòm họng (Nasopharyngea
 - **Phân đoạn khối u**: Sử dụng U-Net để phân đoạn GTV (Gross Tumor Volume)
 - **Phân tích tự động**: Trích xuất đặc điểm khối u (thể tích, kích thước, hình thái)
 - **Trực quan hóa**: Tạo hình ảnh multi-slice, 3-plane view
-- **Báo cáo AI**: Sử dụng Gemini 2.0 Flash để tạo báo cáo y khoa
+- **Báo cáo AI**: Sử dụng Gemini 3 pro để tạo báo cáo y khoa
 - **Chat tương tác**: Hỏi đáp về kết quả phân tích
 - **API Backend**: FastAPI với RESTful endpoints
 - **Web UI**: Gradio interface dễ sử dụng
@@ -207,10 +207,3 @@ Các cấu hình chính trong `config.py`:
 | `server.api_port` | API port | `8080` |
 | `server.gradio_port` | Gradio port | `7860` |
 
-## 📝 License
-
-MIT License
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
