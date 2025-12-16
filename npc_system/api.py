@@ -16,8 +16,8 @@ from fastapi.responses import StreamingResponse, JSONResponse, FileResponse
 from pydantic import BaseModel
 
 # Import our modules
-from .config import get_config, update_gemini_api_key
-from .pipeline import NPCReportPipeline
+from config import get_config, update_gemini_api_key
+from pipeline import NPCReportPipeline
 
 
 # ============================================================

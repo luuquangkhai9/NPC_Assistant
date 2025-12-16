@@ -2,6 +2,7 @@
 NPC Report Generation System - Gradio Web UI
 =============================================
 Interactive web interface for the NPC report generation system.
+Supports both U-Net and SwinUnet models.
 """
 
 import os
@@ -13,8 +14,8 @@ import tempfile
 
 import gradio as gr
 
-from .config import get_config, update_gemini_api_key
-from .pipeline import NPCReportPipeline
+from config import get_config, update_gemini_api_key, update_model_type, get_available_models
+from pipeline import NPCReportPipeline
 
 
 # ============================================================
@@ -33,8 +34,8 @@ def get_pipeline() -> NPCReportPipeline:
     return pipeline
 
 
-def initialize_system(api_key: str) -> str:
-    """Initialize the system with API key"""
+def initialize_system(api_key: str, model_type: str = "unet") -> str:
+    """Initialize the system with API key and model selection"""
     global pipeline
     
     if not api_key.strip():
@@ -42,15 +43,48 @@ def initialize_system(api_key: str) -> str:
     
     try:
         update_gemini_api_key(api_key.strip())
+        update_model_type(model_type)
+        
         pipeline = NPCReportPipeline()
-        success = pipeline.initialize()
+        success = pipeline.initialize(model_type=model_type)
         
         if success:
-            return "✅ Hệ thống đã khởi tạo thành công!"
+            model_name = "SwinUnet" if model_type == "swinunet" else "U-Net"
+            return f"✅ Hệ thống đã khởi tạo thành công với mô hình {model_name}!"
         else:
             return "❌ Lỗi khởi tạo. Kiểm tra model path."
     except Exception as e:
         return f"❌ Lỗi: {str(e)}"
+
+
+def switch_model(model_type: str) -> str:
+    """Switch to a different model type"""
+    global pipeline
+    
+    if pipeline is None or not pipeline.is_initialized:
+        return "❌ Hệ thống chưa được khởi tạo. Vui lòng nhập API key và khởi tạo trước."
+    
+    try:
+        success = pipeline.switch_model(model_type)
+        if success:
+            model_name = "SwinUnet" if model_type == "swinunet" else "U-Net"
+            return f"✅ Đã chuyển sang mô hình {model_name}!"
+        else:
+            return f"❌ Không thể chuyển sang mô hình {model_type}"
+    except Exception as e:
+        return f"❌ Lỗi: {str(e)}"
+
+
+def get_current_model_info() -> str:
+    """Get information about the currently loaded model"""
+    global pipeline
+    if pipeline is None or not pipeline.is_initialized:
+        return "Chưa khởi tạo"
+    
+    model_type = pipeline.current_model_type
+    if model_type == "swinunet":
+        return "🔷 SwinUnet (Transformer-based)"
+    return "🔵 U-Net (CNN-based)"
 
 
 def get_available_cases() -> gr.Dropdown:
@@ -405,16 +439,36 @@ def create_gradio_app() -> gr.Blocks:
         
         # Initialization section
         with gr.Row():
-            with gr.Column(scale=3):
+            with gr.Column(scale=2):
                 api_key_input = gr.Textbox(
                     label="Gemini API Key",
                     placeholder="Nhập API key của bạn...",
                     type="password"
                 )
             with gr.Column(scale=1):
+                model_selector = gr.Dropdown(
+                    label="🧠 Chọn mô hình phân đoạn",
+                    choices=[("U-Net (CNN)", "unet"), ("SwinUnet (Transformer)", "swinunet")],
+                    value="unet",
+                    interactive=True
+                )
+            with gr.Column(scale=1):
                 init_btn = gr.Button("🚀 Khởi tạo hệ thống", variant="primary")
             with gr.Column(scale=2):
                 init_status = gr.Textbox(label="Trạng thái", interactive=False)
+        
+        # Model switching section (visible after initialization)
+        with gr.Row():
+            with gr.Column(scale=2):
+                current_model_display = gr.Textbox(
+                    label="📌 Mô hình hiện tại",
+                    value="Chưa khởi tạo",
+                    interactive=False
+                )
+            with gr.Column(scale=1):
+                switch_model_btn = gr.Button("🔄 Đổi mô hình", variant="secondary")
+            with gr.Column(scale=2):
+                switch_status = gr.Textbox(label="Kết quả", interactive=False)
         
         gr.Markdown("---")
         
@@ -499,20 +553,38 @@ def create_gradio_app() -> gr.Blocks:
                     with gr.Column():
                         gr.Markdown("""
                         **Hướng dẫn sử dụng:**
-                        1. Nhập Gemini API Key và khởi tạo
-                        2. Chọn case hoặc upload file
-                        3. Xem kết quả và báo cáo
-                        4. Chat để hỏi thêm về kết quả
+                        1. Nhập Gemini API Key và chọn mô hình
+                        2. Khởi tạo hệ thống
+                        3. Chọn case hoặc upload file
+                        4. Xem kết quả và báo cáo
+                        5. Chat để hỏi thêm về kết quả
+                        
+                        **Mô hình:**
+                        - **U-Net**: CNN truyền thống, nhanh
+                        - **SwinUnet**: Transformer-based, chính xác hơn
                         """)
         
         # Event handlers
         init_btn.click(
             fn=initialize_system,
-            inputs=[api_key_input],
+            inputs=[api_key_input, model_selector],
             outputs=[init_status]
         ).then(
             fn=get_available_cases,
             outputs=[case_dropdown]
+        ).then(
+            fn=get_current_model_info,
+            outputs=[current_model_display]
+        )
+        
+        # Model switching
+        switch_model_btn.click(
+            fn=switch_model,
+            inputs=[model_selector],
+            outputs=[switch_status]
+        ).then(
+            fn=get_current_model_info,
+            outputs=[current_model_display]
         )
         
         refresh_btn.click(

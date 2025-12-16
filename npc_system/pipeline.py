@@ -2,6 +2,7 @@
 NPC Report Generation System - Pipeline
 ========================================
 Main pipeline that orchestrates all components.
+Supports both U-Net and SwinUnet models.
 """
 
 import json
@@ -9,12 +10,14 @@ import h5py
 import numpy as np
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, Any, Optional, Tuple, Generator
+from typing import Dict, Any, Optional, Tuple, Generator, Union
 
-from .config import get_config, SystemConfig
-from .models import UNet, TumorSegmenter, TumorAnalyzer, TumorFeatures
-from .gemini_service import GeminiReportGenerator
-from .visualization import TumorVisualizer
+from config import get_config, SystemConfig
+from models import UNet, TumorSegmenter, TumorAnalyzer, TumorFeatures, SWIN_DEPS_AVAILABLE
+if SWIN_DEPS_AVAILABLE:
+    from models import SwinUnet, SwinUnetSegmenter
+from gemini_service import GeminiReportGenerator
+from visualization import TumorVisualizer
 
 
 class NPCReportPipeline:
@@ -23,7 +26,7 @@ class NPCReportPipeline:
     
     This pipeline orchestrates:
     1. Loading and preprocessing medical images
-    2. Tumor segmentation using U-Net
+    2. Tumor segmentation using U-Net or SwinUnet
     3. Feature extraction and analysis
     4. Visualization generation
     5. AI-powered report generation
@@ -33,7 +36,7 @@ class NPCReportPipeline:
         self.config = config or get_config()
         
         # Initialize components (lazy loading)
-        self._segmenter: Optional[TumorSegmenter] = None
+        self._segmenter: Optional[Union[TumorSegmenter, 'SwinUnetSegmenter']] = None
         self._analyzer: Optional[TumorAnalyzer] = None
         self._visualizer: Optional[TumorVisualizer] = None
         self._gemini: Optional[GeminiReportGenerator] = None
@@ -41,18 +44,50 @@ class NPCReportPipeline:
         # Current state
         self.current_case: Optional[Dict[str, Any]] = None
         self.is_initialized = False
+        self._current_model_type: Optional[str] = None
     
-    def initialize(self) -> bool:
-        """Initialize all components"""
+    def initialize(self, model_type: Optional[str] = None) -> bool:
+        """
+        Initialize all components.
+        
+        Args:
+            model_type: Override model type ('unet' or 'swinunet'). 
+                       If None, uses config setting.
+        """
         try:
-            # Load segmenter
-            self._segmenter = TumorSegmenter.load_from_checkpoint(
-                self.config.model.model_path,
-                device=self.config.model.device,
-                in_channels=self.config.model.in_channels,
-                num_classes=self.config.model.num_classes,
-                base_width=self.config.model.base_width
-            )
+            # Determine which model to use
+            model_type = model_type or self.config.model.model_type
+            
+            # Load appropriate segmenter based on model type
+            if model_type == 'swinunet':
+                if not SWIN_DEPS_AVAILABLE:
+                    raise ImportError("SwinUnet requires einops and timm. Install with: pip install einops timm")
+                
+                self._segmenter = SwinUnetSegmenter.load_from_checkpoint(
+                    checkpoint_path=self.config.model.swinunet_path,
+                    device=self.config.model.device,
+                    num_classes=self.config.model.num_classes,
+                    img_size=self.config.model.swinunet_img_size,
+                    embed_dim=self.config.model.swinunet_embed_dim,
+                    depths=self.config.model.swinunet_depths,
+                    num_heads=self.config.model.swinunet_num_heads,
+                    window_size=self.config.model.swinunet_window_size,
+                    patch_size=self.config.model.swinunet_patch_size
+                )
+                print(f"✅ Loaded SwinUnet model from {self.config.model.swinunet_path}")
+            else:
+                # Default to U-Net
+                self._segmenter = TumorSegmenter.load_from_checkpoint(
+                    self.config.model.model_path,
+                    device=self.config.model.device,
+                    in_channels=self.config.model.in_channels,
+                    num_classes=self.config.model.num_classes,
+                    base_width=self.config.model.base_width,
+                    patch_size=self.config.model.patch_size
+                )
+                print(f"✅ Loaded U-Net model from {self.config.model.model_path}")
+            
+            self._current_model_type = model_type
             
             # Initialize analyzer
             self._analyzer = TumorAnalyzer(
@@ -74,7 +109,37 @@ class NPCReportPipeline:
             
         except Exception as e:
             print(f"Initialization error: {e}")
+            import traceback
+            traceback.print_exc()
             return False
+    
+    def switch_model(self, model_type: str) -> bool:
+        """
+        Switch to a different model type.
+        
+        Args:
+            model_type: 'unet' or 'swinunet'
+            
+        Returns:
+            True if switch was successful
+        """
+        if model_type not in ['unet', 'swinunet']:
+            print(f"Invalid model type: {model_type}")
+            return False
+        
+        if model_type == self._current_model_type:
+            print(f"Already using {model_type}")
+            return True
+        
+        # Re-initialize with new model type
+        self.is_initialized = False
+        self._segmenter = None
+        return self.initialize(model_type=model_type)
+    
+    @property
+    def current_model_type(self) -> Optional[str]:
+        """Get the currently loaded model type"""
+        return self._current_model_type
     
     def load_case(self, h5_path: Path) -> Dict[str, Any]:
         """

@@ -3,5 +3,7 @@ __pycache__/
 *.pyc
 .DS_Store
 .env
-.vscode/
+.vscode/https://www.facebook.com/groups/
 .idea/
+swin_dataset_npz/
+swin_dataset_h5/

@@ -25,14 +25,14 @@ def run_gradio(port: int = 7860, share: bool = False):
     launch_gradio(share=share, server_port=port)
 
 
-def run_api(port: int = 8000):
+def run_api(port: int = 8080):
     """Run FastAPI server"""
     import uvicorn
     from npc_system.api import app
     uvicorn.run(app, host="0.0.0.0", port=port)
 
 
-def run_both(gradio_port: int = 7860, api_port: int = 8000, share: bool = False):
+def run_both(gradio_port: int = 7860, api_port: int = 8080, share: bool = False):
     """Run both Gradio and FastAPI"""
     
     # Start API in a thread
@@ -69,7 +69,7 @@ Examples:
   python run.py both
   
   # Run with custom ports
-  python run.py both --gradio-port 7861 --api-port 8001
+  python run.py both --gradio-port 7861 --api-port 8080
   
   # Share Gradio publicly
   python run.py gradio --share
@@ -92,8 +92,8 @@ Examples:
     parser.add_argument(
         "--api-port",
         type=int,
-        default=8000,
-        help="Port for FastAPI server (default: 8000)"
+        default=8080,
+        help="Port for FastAPI server (default: 8080)"
     )
     
     parser.add_argument(

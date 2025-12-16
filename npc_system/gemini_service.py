@@ -19,7 +19,7 @@ class ChatMessage:
 class GeminiReportGenerator:
     """Generates medical reports using Gemini API with streaming support"""
     
-    def __init__(self, api_key: str, model_name: str = "gemini-2.5-flash"):
+    def __init__(self, api_key: str, model_name: str = "gemini-3-pro-preview"):
         import google.generativeai as genai
         
         self.api_key = api_key
